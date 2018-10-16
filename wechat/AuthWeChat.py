@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify
-from common.Helper import WeChatService, xml_to_dict
+from common.Helper import WeChatService, xml_to_dict, getCurrentDate
 from common.libs.followers import FollowerSevice
+from common.libs.SignIn import SignInService
 from common.modals.Followers import Follower
+from common.modals.ConversationLog import ConversationLog
 import requests, json
 
 route_auth = Blueprint('wechat_page', __name__)
@@ -49,9 +51,6 @@ def get_all_followers():
     fl_info = FollowerSevice.OpsFlByOpenId(code['FromUserName'])
 
     if fl_info:
-        pass
-
-    if code['Content'] == '签到':
-        return jsonify(2)
+        SignInService.opsSign(fl_info)
 
     return jsonify(code['Content'])
