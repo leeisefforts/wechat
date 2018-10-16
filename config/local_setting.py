@@ -4,7 +4,7 @@ SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://bryant:leekobe24@cd-cdb-nmj4h99o.sql.
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 SQLALCHEMY_ENCODING = "utf8mb4"
 SQLALCHEMY_BINDS = {
-    'mina': "mysql+pymysql://bryant:leekobe24@cd-cdb-nmj4h99o.sql.tencentcdb.com:63625/wechat"
+    'wechat': "mysql+pymysql://bryant:leekobe24@cd-cdb-nmj4h99o.sql.tencentcdb.com:63625/wechat"
 }
 
 APPID = 'wx13c3dbe65e5b5b8e'

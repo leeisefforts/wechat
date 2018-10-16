@@ -5,12 +5,12 @@ from sqlalchemy.schema import FetchedValue
 class Follower(db.Model):
     __tablename__ = 'followers'
 
-    Id = db.column(db.Integer, primary_key=True)
-    NickName = db.column(db.String(128), nullable=False, server_default=db.FetchedValue())
-    OpenId = db.column(db.String(128), nullable=False, server_default=db.FetchedValue())
-    Language = db.column(db.String(128), nullable=False, server_default=db.FetchedValue())
-    Sex = db.column(db.Integer, nullable=False, server_default=db.FetchedValue())
-    HeadImgUrl = db.column(db.String(256), nullable=False, server_default=db.FetchedValue())
-    UpdateTime = db.column(db.DateTime, nullable=False, server_default=db.FetchedValue())
-    CreateTime = db.column(db.DateTime, nullable=False, server_default=db.FetchedValue())
-    Subscribe_time = db.column(db.DateTime, nullable=False, server_default=db.FetchedValue())
+    Id = Column(Integer, primary_key=True)
+    NickName = Column(String(128), nullable=False, server_default=FetchedValue())
+    OpenId = Column(String(128), nullable=False, server_default=FetchedValue())
+    Language = Column(String(128), nullable=False, server_default=FetchedValue())
+    Sex = Column(Integer, nullable=False, server_default=FetchedValue())
+    HeadImgUrl = Column(String(256), nullable=False, server_default=FetchedValue())
+    UpdateTime = Column(DateTime, nullable=False, server_default=FetchedValue())
+    CreateTime = Column(DateTime, nullable=False, server_default=FetchedValue())
+    Subscribe_time = Column(Integer, nullable=False, server_default=FetchedValue())
