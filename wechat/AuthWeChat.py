@@ -27,7 +27,7 @@ def authWeChat():
 
 @route_auth.route('test')
 def test():
-    return jsonify('bbbbb222')
+    return jsonify('bbbbb222444')
 
 '''
 
