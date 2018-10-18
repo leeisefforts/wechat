@@ -9,6 +9,10 @@ import requests, json, time, hashlib
 route_auth = Blueprint('wechat_page', __name__)
 token = 'meihuomeipu'
 
+testXml = '<xml>  <ToUserName>test</ToUserName>  <FromUserName>oCMdfwKnqFIOhC6FxV3nG9KuEiUA</FromUserName> ' \
+          '<CreateTime>1348831860</CreateTime>  <MsgType>text</MsgType>  <Content>' \
+          '签到</Content>  <MsgId>1234567890123456</MsgId> </xml>'
+
 @route_auth.route('/authWeChat')
 def authWeChat():
     signature = request.values['signature']
@@ -39,7 +43,6 @@ def wechat_msg():
     signature = request.values['signature']
     timestamp = request.values['timestamp']
     nonce = request.values['nonce']
-    echostr = request.values['echostr']
 
     tmp = [token, timestamp, nonce]
     tmp.sort()
@@ -47,6 +50,7 @@ def wechat_msg():
     tmp = hashlib.sha1(tmp.encode('utf-8')).hexdigest()
     if tmp == signature:
         if request.method == "GET":
+            echostr = request.values['echostr']
             return echostr
 
         xml = request.data
