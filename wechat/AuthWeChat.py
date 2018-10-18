@@ -14,7 +14,7 @@ def authWeChat():
     return WeChatService.getAccessToken()
 
 
-@route_auth.route('/vaild')
+@route_auth.route('/vaurl')
 def vaild_wechat():
     signature = request.values['signature']
     timestamp = request.values['timestamp']
@@ -23,7 +23,7 @@ def vaild_wechat():
     tmp = [app.config['APPTOKEN'], timestamp, nonce]
     tmp.sort()
     tmp = ''.join(tmp)
-    tmp = hashlib.sha1(tmp).hexdigest()
+    tmp = hashlib.sha1(tmp.encode('utf-8')).hexdigest()
     if tmp == signature:
         return echostr
 
@@ -39,6 +39,11 @@ def vaild_wechat():
 @route_auth.route('/wechat_msg')
 def wechat_msg():
     xml = request.values
+
+
+
+
+
     code = xml_to_dict(xml)
     str = ''
     # 判断openid是否存在
