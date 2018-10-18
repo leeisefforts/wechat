@@ -23,6 +23,9 @@ class SignInService():
             db.session.commit()
             strd = '签到成功, 您已连续签到1天'
 
+            FollowerSevice.send_msg(strd, fl_info.OpenId)
+            pass
+
         date = datetime.datetime.strptime(str(si.SignInTime), '%Y-%m-%d %H:%M:%S')
 
         # 判断是否在今天
