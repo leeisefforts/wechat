@@ -33,7 +33,7 @@ def test():
 '''
 
 
-@route_auth.route('/wechat_msg')
+@route_auth.route('/wechat_msg', ["GET", "POST"])
 def wechat_msg():
 
     signature = request.values['signature']
@@ -46,6 +46,9 @@ def wechat_msg():
     tmp = ''.join(tmp)
     tmp = hashlib.sha1(tmp.encode('utf-8')).hexdigest()
     if tmp == signature:
+        if request.method == "GET":
+            return echostr
+
         xml = request.data
         code = xml_to_dict(xml)
         str = ''
