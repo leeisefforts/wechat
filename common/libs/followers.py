@@ -2,6 +2,8 @@ from application import app, db
 from common.modals.Followers import Follower
 from common.Helper import WeChatService, getCurrentDate
 import requests
+
+
 class FollowerSevice():
 
     @staticmethod
@@ -30,4 +32,18 @@ class FollowerSevice():
 
         return fl_info
 
+    @staticmethod
+    def send_msg(str, openId):
+        headers = {'Content-Type': 'application/json'}
+        data = {
+            "touser": openId,
+            "msgtype": "text",
+            "text":
+                {
+                    "content": str
+                }
+        }
+        url = "https://api.mch.weixin.qq.com/pay/unifiedorder"
+        r = requests.post(url, headers=headers, data=data.encode("utf-8"))
 
+        r.encoding = "utf-8"

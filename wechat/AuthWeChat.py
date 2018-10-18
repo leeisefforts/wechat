@@ -27,7 +27,7 @@ def authWeChat():
 
 @route_auth.route('test')
 def test():
-    return jsonify('bbbbb222444')
+    return jsonify('tesgfg')
 
 '''
 
@@ -55,14 +55,14 @@ def wechat_msg():
 
         xml = request.data
         code = xml_to_dict(xml)
-        str = ''
+
         # 判断openid是否存在
         fl_info = FollowerSevice.OpsFlByOpenId(code['FromUserName'])
 
         if fl_info:
 
             if code['Content'] == '签到':
-                str = SignInService.opsSign(fl_info)
+                SignInService.opsSign(fl_info)
 
             cl = ConversationLog()
             cl.CreateTime = getCurrentDate()
@@ -73,14 +73,14 @@ def wechat_msg():
             db.session.add(cl)
             db.session.commit()
 
-        tm = int(time.time())
-        result = {
-            'ToUserName': code['FromUserName'],
-            'FromUserName': code['ToUserName'],
-            'CreateTime': tm,
-            'MsgType': 'text',
-            'Content': str
-        }
-        result = dict_to_xml(result)
+        # tm = int(time.time())
+        # result = {
+        #     'ToUserName': code['FromUserName'],
+        #     'FromUserName': code['ToUserName'],
+        #     'CreateTime': tm,
+        #     'MsgType': 'text',
+        #     'Content': str
+        # }
+        # result = dict_to_xml(result)
 
-    return result
+    return 'success'
