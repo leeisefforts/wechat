@@ -1,8 +1,7 @@
 from application import app, db
-from flask import jsonify
 from common.modals.Followers import Follower
 from common.Helper import WeChatService, getCurrentDate
-import requests
+import requests, json
 
 
 class FollowerSevice():
@@ -34,18 +33,19 @@ class FollowerSevice():
         return fl_info
 
     @staticmethod
-    def send_msg(str, openId):
-        headers = {'Content-Type': 'application/json'}
+    def send_msg(strd, openId):
+        header = {'content-type': "application/json; charset = 'utf-8' "}
         data = {
             "touser": openId,
             "msgtype": "text",
             "text":
                 {
-                    "content": str
+                    "content": strd
                 }
         }
         url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}".format(WeChatService.getAccessToken())
-        r = requests.post(url, headers=headers, data=jsonify(data))
+        data = json.dumps(data,ensure_ascii=False)
+        r = requests.post(url,headers= header, data=data)
 
         r.text
 

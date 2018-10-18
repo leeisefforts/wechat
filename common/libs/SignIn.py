@@ -39,7 +39,7 @@ class SignInService():
                 db.session.add(si)
                 db.session.commit()
 
-                strd = '签到成功, 您已连续签到{0}天'.format(si.SignInDays)
+                strd = '签到成功,您已连续签到{0}天'.format(si.SignInDays)
 
         FollowerSevice.send_msg(strd, fl_info.OpenId)
 
