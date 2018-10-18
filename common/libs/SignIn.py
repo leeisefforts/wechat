@@ -19,15 +19,16 @@ class SignInService():
             signin.SignInDays = 1
             signin.SignInTime = getCurrentDate()
             db.session.add(signin)
-            db.commit()
+            db.session.commit()
+            return '签到成功, 您已连续签到1天'
 
-        date = datetime.datetime.strptime(si.SignInTime, '%Y-%m-%d %H:%M:%S')
+        date = datetime.datetime.strptime(str(si.SignInTime), '%Y-%m-%d %H:%M:%S')
 
         # 判断是否在今天
         now = datetime.datetime.now()
         stf = (now - date).seconds
         if stf < 86400:
-            return '今天您已经签过到了'
+            return '今天您已经签到过了'
 
         si.SignInDays += 1
         si.SignInTime = getCurrentDate()

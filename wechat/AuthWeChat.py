@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 from common.Helper import WeChatService, xml_to_dict, getCurrentDate
 from common.libs.followers import FollowerSevice
 from common.libs.SignIn import SignInService
-from common.modals.Followers import Follower
+from application import db, app
 from common.modals.ConversationLog import ConversationLog
 import requests, json
 
@@ -40,17 +40,28 @@ def authWeChat():
 '''
 
 
-@route_auth.route('/getAllFollower')
-def get_all_followers():
-    str = '<xml>  <ToUserName>tousername</ToUserName>  <FromUserName>fromusername</FromUserName>  ' \
-          '<CreateTime>1348831860</CreateTime>  <MsgType>test</MsgType>  <Content>' \
+@route_auth.route('/wechat_msg')
+def wechat_msg():
+    xml = '<xml>  <ToUserName>test</ToUserName>  <FromUserName>oCMdfwKnqFIOhC6FxV3nG9KuEiUA</FromUserName> ' \
+          '<CreateTime>1348831860</CreateTime>  <MsgType>text</MsgType>  <Content>' \
           '签到</Content>  <MsgId>1234567890123456</MsgId> </xml>'
-    code = xml_to_dict(str)
-
+    code = xml_to_dict(xml)
+    str = ''
     # 判断openid是否存在
     fl_info = FollowerSevice.OpsFlByOpenId(code['FromUserName'])
 
     if fl_info:
-        SignInService.opsSign(fl_info)
 
-    return jsonify(code['Content'])
+        if code['Content'] == '签到':
+            str = SignInService.opsSign(fl_info)
+
+        cl = ConversationLog()
+        cl.CreateTime = getCurrentDate()
+        cl.ToUserName = code['ToUserName']
+        cl.FromUserName = code['FromUserName']
+        cl.Content = code['Content']
+
+        db.session.add(cl)
+        db.session.commit()
+
+    return str

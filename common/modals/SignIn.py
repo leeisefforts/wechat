@@ -3,7 +3,7 @@ from sqlalchemy import Column, DateTime, Integer, Numeric, String
 from sqlalchemy.schema import FetchedValue
 
 class SignIn(db.Model):
-    __tablename_ = 'signIn'
+    __tablename__ = 'signIn'
 
     Id = Column(Integer, primary_key =True)
     OpenId = Column(String(128), nullable=False, server_default=FetchedValue())
