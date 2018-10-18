@@ -39,3 +39,4 @@ class SignInService():
         str = '签到成功, 您已连续签到{0}天'.format(si.SignInDays)
 
         FollowerSevice.send_msg(str, SignIn.OpenId)
+        

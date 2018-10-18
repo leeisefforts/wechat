@@ -47,3 +47,4 @@ class FollowerSevice():
         r = requests.post(url, headers=headers, data=data.encode("utf-8"))
 
         r.encoding = "utf-8"
+

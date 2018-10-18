@@ -36,7 +36,6 @@ def test():
           '签到</Content>  <MsgId>1234567890123456</MsgId> </xml>'
 '''
 
-
 @route_auth.route('/wechat_msg', methods=["GET", "POST"])
 def wechat_msg():
 
