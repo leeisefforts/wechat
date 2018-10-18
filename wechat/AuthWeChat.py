@@ -13,7 +13,12 @@ route_auth = Blueprint('wechat_page', __name__)
 def authWeChat():
     signature = request.values['signature']
     timestamp = request.values['timestamp']
-    return WeChatService.getAccessToken()
+    nonce = request.values['nonce']
+    echostr = request.values['echostr']
+    tmp = [app.config['APPTOKEN'], timestamp, nonce]
+    tmp.sort()
+    tmp = ''.join(tmp)
+    return tmp
 
 
 @route_auth.route('/vaurl')
