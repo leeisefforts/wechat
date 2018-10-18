@@ -35,7 +35,8 @@ def vaild_wechat():
 
 @route_auth.route('test')
 def test():
-    return 'test'
+    return jsonify('asdasd')
+
 '''
 
 '<xml>  <ToUserName>test</ToUserName>  <FromUserName>oCMdfwKnqFIOhC6FxV3nG9KuEiUA</FromUserName> ' \
