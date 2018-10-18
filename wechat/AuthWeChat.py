@@ -33,7 +33,7 @@ def test():
 '''
 
 
-@route_auth.route('/wechat_msg', ["GET", "POST"])
+@route_auth.route('/wechat_msg', methods=["GET", "POST"])
 def wechat_msg():
 
     signature = request.values['signature']
