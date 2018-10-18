@@ -11,6 +11,8 @@ route_auth = Blueprint('wechat_page', __name__)
 
 @route_auth.route('/authWeChat')
 def authWeChat():
+    signature = request.values['signature']
+    timestamp = request.values['timestamp']
     return WeChatService.getAccessToken()
 
 
