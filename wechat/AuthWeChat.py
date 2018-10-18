@@ -38,39 +38,52 @@ def vaild_wechat():
 
 @route_auth.route('/wechat_msg')
 def wechat_msg():
-    xml = request.values
+
+    signature = request.values['signature']
+    timestamp = request.values['timestamp']
+    nonce = request.values['nonce']
+    echostr = request.values['echostr']
+    tmp = [app.config['APPTOKEN'], timestamp, nonce]
+    tmp.sort()
+    tmp = ''.join(tmp)
+    tmp = hashlib.sha1(tmp.encode('utf-8')).hexdigest()
+    if tmp == signature:
+        return echostr
 
 
+    # xml = request.values
+    #
+    #
+    #
+    #
+    #
+    # code = xml_to_dict(xml)
+    # str = ''
+    # # 判断openid是否存在
+    # fl_info = FollowerSevice.OpsFlByOpenId(code['FromUserName'])
+    #
+    # if fl_info:
+    #
+    #     if code['Content'] == '签到':
+    #         str = SignInService.opsSign(fl_info)
+    #
+    #     cl = ConversationLog()
+    #     cl.CreateTime = getCurrentDate()
+    #     cl.ToUserName = code['ToUserName']
+    #     cl.FromUserName = code['FromUserName']
+    #     cl.Content = code['Content']
+    #
+    #     db.session.add(cl)
+    #     db.session.commit()
+    #
+    # tm = int(time.time())
+    # result = {
+    #     'ToUserName': code['FromUserName'],
+    #     'FromUserName': code['ToUserName'],
+    #     'CreateTime': tm,
+    #     'MsgType': 'text',
+    #     'Content': str
+    # }
+    # result = dict_to_xml(result)
 
-
-
-    code = xml_to_dict(xml)
-    str = ''
-    # 判断openid是否存在
-    fl_info = FollowerSevice.OpsFlByOpenId(code['FromUserName'])
-
-    if fl_info:
-
-        if code['Content'] == '签到':
-            str = SignInService.opsSign(fl_info)
-
-        cl = ConversationLog()
-        cl.CreateTime = getCurrentDate()
-        cl.ToUserName = code['ToUserName']
-        cl.FromUserName = code['FromUserName']
-        cl.Content = code['Content']
-
-        db.session.add(cl)
-        db.session.commit()
-
-    tm = int(time.time())
-    result = {
-        'ToUserName': code['FromUserName'],
-        'FromUserName': code['ToUserName'],
-        'CreateTime': tm,
-        'MsgType': 'text',
-        'Content': str
-    }
-    result = dict_to_xml(result)
-
-    return result
+    return echostr
