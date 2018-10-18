@@ -8,22 +8,25 @@ import requests, json, time, hashlib
 
 route_auth = Blueprint('wechat_page', __name__)
 
+
 @route_auth.route('/authWeChat')
 def authWeChat():
     return WeChatService.getAccessToken()
 
+
 @route_auth.route('/vaild')
 def vaild_wechat():
-    signature = request.query_string['signature']
-    timestamp = request.query_string['timestamp']
-    nonce = request.query_string['nonce']
-    echostr = request.query_string['echostr']
+    signature = request.values['signature']
+    timestamp = request.values['timestamp']
+    nonce = request.values['nonce']
+    echostr = request.values['echostr']
     tmp = [app.config['APPTOKEN'], timestamp, nonce]
     tmp.sort()
     tmp = ''.join(tmp)
-    tmp =  hashlib.sha1(tmp).hexdigest()
+    tmp = hashlib.sha1(tmp).hexdigest()
     if tmp == signature:
         return echostr
+
 
 '''
 
