@@ -4,31 +4,26 @@ from common.libs.followers import FollowerSevice
 from common.libs.SignIn import SignInService
 from application import db, app
 from common.modals.ConversationLog import ConversationLog
-import requests, json, time
+import requests, json, time, hashlib
 
 route_auth = Blueprint('wechat_page', __name__)
 
-
 @route_auth.route('/authWeChat')
 def authWeChat():
-    # url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}'.format(
-    #     app.config['APPID'], app.config['APPSERCRETID'])
-    # res = requests.get(url)
-    # res = res.json()
-    #
-    # account = Account()
-    # account.AccountName = '美货美铺'
-    # account.AppId = app.config['APPID']
-    # account.Created_time = datetime.datetime.now()
-    # account.Updated_time = datetime.datetime.now()
-    # account.Access_Token = res['access_token']
-    # account.Expires_In = res['expires_in']
-    #
-    # db.session.add(account)
-    #
-    # db.session.commit()
     return WeChatService.getAccessToken()
 
+@route_auth.route('/vaild')
+def vaild_wechat():
+    signature = request.query_string['signature']
+    timestamp = request.query_string['timestamp']
+    nonce = request.query_string['nonce']
+    echostr = request.query_string['echostr']
+    tmp = [app.config['APPTOKEN'], timestamp, nonce]
+    tmp.sort()
+    tmp = ''.join(tmp)
+    tmp =  hashlib.sha1(tmp).hexdigest()
+    if tmp == signature:
+        return echostr
 
 '''
 

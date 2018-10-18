@@ -9,3 +9,5 @@ SQLALCHEMY_BINDS = {
 
 APPID = 'wx13c3dbe65e5b5b8e'
 APPSERCRETID = '5814febca3cf6b2e051175253197ded1'
+APPTOKEN = 'meihuomeipu'
+EncodingAESKey = 'ydACzeYmdEB6r7uFMg2qfUvvtew7sQjAgav9kOWdgMl'
