@@ -23,24 +23,23 @@ class SignInService():
             db.session.commit()
             strd = '签到成功, 您已连续签到1天'
 
-            FollowerSevice.send_msg(strd, fl_info.OpenId)
-            pass
-
-        date = datetime.datetime.strptime(str(si.SignInTime), '%Y-%m-%d %H:%M:%S')
-
-        # 判断是否在今天
-        now = datetime.datetime.now()
-        stf = (now - date).seconds
-        if stf < 86400:
-            strd = '今天您已经签到过了'
         else:
 
-            si.SignInDays += 1
-            si.SignInTime = getCurrentDate()
-            db.session.add(si)
-            db.session.commit()
+            date = datetime.datetime.strptime(str(si.SignInTime), '%Y-%m-%d %H:%M:%S')
 
-            strd = '签到成功, 您已连续签到{0}天'.format(si.SignInDays)
+            # 判断是否在今天
+            now = datetime.datetime.now()
+            stf = (now - date).seconds
+            if stf < 86400:
+                strd = '今天您已经签到过了'
+            else:
+
+                si.SignInDays += 1
+                si.SignInTime = getCurrentDate()
+                db.session.add(si)
+                db.session.commit()
+
+                strd = '签到成功, 您已连续签到{0}天'.format(si.SignInDays)
 
         FollowerSevice.send_msg(strd, fl_info.OpenId)
 
