@@ -43,8 +43,8 @@ class FollowerSevice():
                     "content": str
                 }
         }
-        url = "https://api.mch.weixin.qq.com/pay/unifiedorder"
-        r = requests.post(url, headers=headers, data=data.encode("utf-8"))
+        url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}".format(WeChatService.getAccessToken())
+        r = requests.post(url, headers=headers, data=data)
 
-        r.encoding = "utf-8"
+        r.text
 

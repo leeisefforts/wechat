@@ -13,7 +13,7 @@ class SignInService():
     @staticmethod
     def opsSign(fl_info):
         si = SignIn.query.filter(SignIn.OpenId == fl_info.OpenId).first()
-        str = ''
+        strd = ''
         if not si:
             signin = SignIn()
             signin.OpenId = fl_info.OpenId
@@ -21,7 +21,7 @@ class SignInService():
             signin.SignInTime = getCurrentDate()
             db.session.add(signin)
             db.session.commit()
-            str = '签到成功, 您已连续签到1天'
+            strd = '签到成功, 您已连续签到1天'
 
         date = datetime.datetime.strptime(str(si.SignInTime), '%Y-%m-%d %H:%M:%S')
 
@@ -29,14 +29,15 @@ class SignInService():
         now = datetime.datetime.now()
         stf = (now - date).seconds
         if stf < 86400:
-            str = '今天您已经签到过了'
+            strd = '今天您已经签到过了'
+        else:
 
-        si.SignInDays += 1
-        si.SignInTime = getCurrentDate()
-        db.session.add(si)
-        db.session.commit()
+            si.SignInDays += 1
+            si.SignInTime = getCurrentDate()
+            db.session.add(si)
+            db.session.commit()
 
-        str = '签到成功, 您已连续签到{0}天'.format(si.SignInDays)
+            strd = '签到成功, 您已连续签到{0}天'.format(si.SignInDays)
 
-        FollowerSevice.send_msg(str, SignIn.OpenId)
-        
+        FollowerSevice.send_msg(strd, fl_info.OpenId)
+
