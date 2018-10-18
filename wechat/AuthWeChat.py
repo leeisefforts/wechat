@@ -7,7 +7,7 @@ from common.modals.ConversationLog import ConversationLog
 import requests, json, time, hashlib
 
 route_auth = Blueprint('wechat_page', __name__)
-
+token = 'meihuomeipu'
 
 @route_auth.route('/authWeChat')
 def authWeChat():
@@ -15,11 +15,10 @@ def authWeChat():
     timestamp = request.values['timestamp']
     nonce = request.values['nonce']
     echostr = request.values['echostr']
-    tmp = [app.config['APPTOKEN'], timestamp, nonce]
+    tmp = [token, timestamp, nonce]
     tmp.sort()
     tmp = ''.join(tmp)
     return tmp
-
 
 @route_auth.route('/vaurl')
 def vaild_wechat():
@@ -27,14 +26,16 @@ def vaild_wechat():
     timestamp = request.values['timestamp']
     nonce = request.values['nonce']
     echostr = request.values['echostr']
-    tmp = [app.config['APPTOKEN'], timestamp, nonce]
+    tmp = [token, timestamp, nonce]
     tmp.sort()
     tmp = ''.join(tmp)
     tmp = hashlib.sha1(tmp.encode('utf-8')).hexdigest()
     if tmp == signature:
         return echostr
 
-
+@route_auth.route('test')
+def test():
+    return 'test'
 '''
 
 '<xml>  <ToUserName>test</ToUserName>  <FromUserName>oCMdfwKnqFIOhC6FxV3nG9KuEiUA</FromUserName> ' \
@@ -50,7 +51,7 @@ def wechat_msg():
     timestamp = request.values['timestamp']
     nonce = request.values['nonce']
     echostr = request.values['echostr']
-    tmp = [app.config['APPTOKEN'], timestamp, nonce]
+    tmp = [token, timestamp, nonce]
     tmp.sort()
     tmp = ''.join(tmp)
     tmp = hashlib.sha1(tmp.encode('utf-8')).hexdigest()
