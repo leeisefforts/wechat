@@ -44,7 +44,7 @@ class FollowerSevice():
                 }
         }
         url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}".format(WeChatService.getAccessToken())
-        data = json.dumps(data,ensure_ascii=False)
+        data = json.dumps(data,ensure_ascii=False).encode('utf-8')
         r = requests.post(url,headers= header, data=data)
 
         r.text
