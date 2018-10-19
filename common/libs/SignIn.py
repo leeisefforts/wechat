@@ -21,7 +21,7 @@ class SignInService():
             signin.SignInTime = getCurrentDate()
             db.session.add(signin)
             db.session.commit()
-            strd = '恭喜小可爱签到成功~\r\n您已连续签到1天了！\r\n连续签到9天即可获得法国state no9\r\n邦九号手霜一组\r\n连续签到21天即可半价购买原价186的\r\n安耐晒小金瓶一支'
+            strd = '恭喜小可爱签到成功~\r\n您已连续签到1天了！\r\n连续签到9天即可获得法国state no9邦九号手霜一组\r\n连续签到21天即可半价购买原价186的\r\n安耐晒小金瓶一支'
 
         else:
 
@@ -39,7 +39,7 @@ class SignInService():
                 db.session.add(si)
                 db.session.commit()
 
-                strd = '恭喜小可爱签到成功~\r\n您已连续签到{0}天了！\r\n连续签到9天即可获得法国state no9\r\n邦九号手霜一组\r\n连续签到21天即可半价购买原价186的\r\n安耐晒小金瓶一支'.format(si.SignInDays)
+                strd = '恭喜小可爱签到成功~\r\n您已连续签到{0}天了！\r\n连续签到9天即可获得法国state no9邦九号手霜一组\r\n连续签到21天即可半价购买原价186的\r\n安耐晒小金瓶一支'.format(si.SignInDays)
 
         FollowerSevice.send_msg(strd, fl_info.OpenId)
 
