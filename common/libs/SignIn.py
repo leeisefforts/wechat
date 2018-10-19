@@ -39,10 +39,14 @@ class SignInService():
                 db.session.add(si)
                 db.session.commit()
 
-                strd = '恭喜小可爱签到成功~\r\n您已连续签到{0}天了！\r\n连续签到9天即可免费获得法国state no9邦九号手霜一组（邮费自理）\r\n或连续签到21天即可半价购买安耐晒小金瓶（原价186元）一支'.format(si.SignInDays)
+                if si.SignInDays == 9:
+                    strd = '小可爱已经成功签到9天啦！\r\n您可以后台发送您的微信号二维码联系小编\r\n免费获得法国state no9邦九号手霜一组（邮费自理）\r\n或连续签到21天即可半价购买安耐晒小金瓶（原价186元）一支'.format(
+                        si.SignInDays)
+                elif si.SignInDays == 21:
+                    strd = '小可爱真是太厉害了！\r\n您已连续签到{0}天了！\r\n现在可以在后台发送您的微信号二维码给小编\r\n半价购买安耐晒小金瓶（原价186元）一支~'.format(
+                        si.SignInDays)
+                else:
+                    strd = '恭喜小可爱签到成功~\r\n您已连续签到{0}天了！\r\n连续签到9天即可免费获得法国state no9邦九号手霜一组（邮费自理）\r\n或连续签到21天即可半价购买安耐晒小金瓶（原价186元）一支'.format(
+                        si.SignInDays)
 
         FollowerSevice.send_msg(strd, fl_info.OpenId)
-
-
-
-
