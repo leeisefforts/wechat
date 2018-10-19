@@ -21,17 +21,17 @@ class SignInService():
             signin.SignInTime = getCurrentDate()
             db.session.add(signin)
             db.session.commit()
-            strd = '签到成功, 您已连续签到1天'
+            strd = '恭喜小可爱签到成功~您已连续签到1天了！连续签到9天即可获得法国state no9邦九号手霜一组连续签到21天即可半价购买原价186的安耐晒小金瓶一支'
 
         else:
 
-            date = datetime.datetime.strptime(str(si.SignInTime), '%Y-%m-%d %H:%M:%S')
+            date = datetime.datetime.strptime(str(si.SignInTime), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
 
             # 判断是否在今天
-            now = datetime.datetime.now()
-            stf = (now - date).seconds
-            if stf < 86400:
-                strd = '今天您已经签到过了'
+            now = datetime.datetime.now().strftime('%Y-%m-%d')
+            # stf = (now - date).seconds
+            if now == date:
+                strd = '今天您已经签到过了~您已连续签到{0}天了！'.format(si.SignInDays)
             else:
 
                 si.SignInDays += 1
@@ -39,7 +39,7 @@ class SignInService():
                 db.session.add(si)
                 db.session.commit()
 
-                strd = '签到成功,您已连续签到{0}天'.format(si.SignInDays)
+                strd = '恭喜小可爱签到成功~您已连续签到{0}天了！连续签到9天即可获得法国state no9邦九号手霜一组连续签到21天即可半价购买原价186的安耐晒小金瓶一支'.format(si.SignInDays)
 
         FollowerSevice.send_msg(strd, fl_info.OpenId)
 
