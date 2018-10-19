@@ -54,7 +54,7 @@ def wechat_msg():
 
         xml = request.data
         code = xml_to_dict(xml)
-
+        result = 'success'
         # 判断openid是否存在
         fl_info = FollowerSevice.OpsFlByOpenId(code['FromUserName'])
 
@@ -62,6 +62,10 @@ def wechat_msg():
 
             if code['Content'] == '签到':
                 SignInService.opsSign(fl_info)
+            else:
+                if code['MsgType'] == 'event':
+                    if code['Event'] == 'subscribe':
+                        FollowerSevice.send_msg('终于等到你 还好我没放弃\r\n\r\n美货美铺，八年专业海淘经验\r\n您身边值得信任的海淘专家！\r\n晨大人 微信：shijimonian', fl_info.OpenId)
 
             cl = ConversationLog()
             cl.CreateTime = getCurrentDate()
@@ -82,4 +86,4 @@ def wechat_msg():
         # }
         # result = dict_to_xml(result)
 
-    return 'success'
+    return result
