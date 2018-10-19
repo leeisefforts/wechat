@@ -4,3 +4,5 @@ pymysql
 flask_script
 requests
 uwsgi
+scrapy
+pypiwin32
