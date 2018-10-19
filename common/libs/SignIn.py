@@ -32,7 +32,11 @@ class SignInService():
             # stf = (now - date).seconds
             if now == date:
                 strd = '小可爱今天已经签到过啦，请明天再来~'
-            elif datetime.datetime.strptime(str(now), '%Y-%m-%d')- datetime.datetime.strptime(str(date), '%Y-%m-%d') > 1:
+            elif (datetime.datetime.strptime(str(now), '%Y-%m-%d') - datetime.datetime.strptime(str(date), '%Y-%m-%d')).days > 1:
+                si.SignInDays = 1
+                si.SignInTime = getCurrentDate()
+                db.session.add(si)
+                db.session.commit()
                 strd = '恭喜小可爱签到成功~\r\n您已连续签到1天了！\r\n连续签到9天即可免费获得法国state no9邦九号手霜一组（邮费自理）\r\n或连续签到21天即可半价购买安耐晒小金瓶（原价186元）一支'
             else:
 
