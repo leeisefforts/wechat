@@ -29,8 +29,9 @@ class FollowerSevice():
         follower.Language = fl['language']
         follower.Subscribe_time = fl['subscribe_time']
         follower.UpdateTime = getCurrentDate()
-
-        return fl_info
+        db.session.add(follower)
+        db.session.commit()
+        return follower
 
     @staticmethod
     def send_msg(strd, openId):
