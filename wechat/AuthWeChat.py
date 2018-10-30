@@ -28,7 +28,18 @@ def authWeChat():
 
 @route_auth.route('test')
 def test():
-    return jsonify('tesgfgbbb')
+    header = {'content-type': "application/json; charset = 'utf-8' "}
+
+    url = 'https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token={0}'.format(
+        WeChatService.getAccessToken())
+    data = {
+        "type": "image",
+        "offset": "0",
+        "count": "10"
+    }
+    data = json.dumps(data)
+    res = requests.post(url, headers=header, data=data)
+    return jsonify(res.text)
 
 
 '''
@@ -62,8 +73,14 @@ def wechat_msg():
 
         if fl_info:
 
-            if code['Content'] == '签到':
-                SignInService.opsSign(fl_info)
+            if code['MsgType'] == 'text':
+
+                if code['Content'] == '签到':
+                    SignInService.opsSign(fl_info)
+                elif code['Content'] == '万圣节':
+                    mediaId = '56BTVr0HEMnwI9koUHtaq8kA452NcCVVdhyhgE0jJkA'
+                    FollowerSevice.send_img(mediaId, fl_info.OpenId)
+                    
             else:
                 if code['MsgType'] == 'event':
                     if code['Event'] == 'subscribe':

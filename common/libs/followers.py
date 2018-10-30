@@ -50,3 +50,20 @@ class FollowerSevice():
 
         r.text
 
+
+    @staticmethod
+    def send_img(mediaId, openId):
+        header = {'content-type': "application/json; charset = 'utf-8' "}
+        data = {
+            "touser": openId,
+            "msgtype": "image",
+            "text":
+                {
+                    "media_id": mediaId
+                }
+        }
+        url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}".format(WeChatService.getAccessToken())
+        data = json.dumps(data,ensure_ascii=False).encode('utf-8')
+        r = requests.post(url,headers= header, data=data)
+
+        r.text
