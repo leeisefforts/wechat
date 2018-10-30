@@ -57,13 +57,13 @@ class FollowerSevice():
         data = {
             "touser": openId,
             "msgtype": "image",
-            "text":
+            "image":
                 {
                     "media_id": mediaId
                 }
         }
         url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}".format(WeChatService.getAccessToken())
-        data = json.dumps(data,ensure_ascii=False).encode('utf-8')
+        data = json.dumps(data)
         r = requests.post(url,headers= header, data=data)
 
         r.text

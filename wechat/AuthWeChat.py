@@ -35,7 +35,7 @@ def test():
     data = {
         "type": "image",
         "offset": "0",
-        "count": "10"
+        "count": "1"
     }
     data = json.dumps(data)
     res = requests.post(url, headers=header, data=data)
@@ -74,14 +74,16 @@ def wechat_msg():
         if fl_info:
 
             if code['MsgType'] == 'text':
-
+                content = code['Content']
                 if code['Content'] == '签到':
                     SignInService.opsSign(fl_info)
                 elif code['Content'] == '万圣节':
                     mediaId = '56BTVr0HEMnwI9koUHtaq8kA452NcCVVdhyhgE0jJkA'
                     FollowerSevice.send_img(mediaId, fl_info.OpenId)
-                    
+            elif code['MsgType'] == 'image':
+                content = code['PicUrl']
             else:
+
                 if code['MsgType'] == 'event':
                     if code['Event'] == 'subscribe':
                         FollowerSevice.send_msg(
@@ -91,7 +93,7 @@ def wechat_msg():
             cl.CreateTime = getCurrentDate()
             cl.ToUserName = code['ToUserName']
             cl.FromUserName = code['FromUserName']
-            cl.Content = code['Content']
+            cl.Content = content
 
             db.session.add(cl)
             db.session.commit()
